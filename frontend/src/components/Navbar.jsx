@@ -6,17 +6,21 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     logout();
-    navigate('/login');
+    navigate('/login', { replace: true });
   };
+
+  const isAuthed = !!(user || sessionStorage.getItem('token'));
 
   return (
     <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold">Your apps name</Link>
+      <Link to="/" className="text-2xl font-bold">COMPLAINT DESK</Link>
       <div>
-        {user ? (
+        {isAuthed ? (
           <>
-            <Link to="/tasks" className="mr-4">CRUD</Link>
+            <Link to="/complaints" className="mr-4"></Link>
             <Link to="/profile" className="mr-4">Profile</Link>
             <button
               onClick={handleLogout}
